@@ -94,7 +94,6 @@ def setup_advanced_logging():
     
     logger.addHandler(console_handler)
     
-    # Остальной код без изменений...
     # Файловый вывод с ротацией
     file_handler = logging.handlers.RotatingFileHandler(
         'bot.log',
@@ -398,41 +397,72 @@ def verify_ticket_qr(qr_data: str) -> Dict:
         logger.error(f"Ошибка проверки QR-кода: {e}", exc_info=True)
         return {"valid": False, "error": f"Ошибка проверки: {str(e)[:100]}"}
 
-# ========== ФУНКЦИЯ ДЛЯ РАСПОЗНАВАНИЯ QR-КОДА С ФОТО ==========
+# ========== ФУНКЦИЯ ДЛЯ РАСПОЗНАВАНИЯ QR-КОДА С ФОТО С ПОМОЩЬЮ OpenCV ==========
 async def decode_qr_from_photo(photo_file) -> Optional[str]:
     """
-    Распознает QR-код с фото
+    Распознает QR-код с фото используя OpenCV
     Возвращает текст из QR-кода или None если не удалось распознать
     """
     try:
-        # Сначала пробуем использовать pyzbar, если он установлен
+        # Пробуем использовать OpenCV для распознавания QR-кодов
         try:
-            from pyzbar.pyzbar import decode
-            from PIL import Image
+            import cv2
             import numpy as np
             
             # Скачиваем фото
             photo_bytes = await photo_file.download_as_bytearray()
             
-            # Открываем изображение с помощью PIL
-            image = Image.open(io.BytesIO(photo_bytes))
+            # Конвертируем байты в numpy массив
+            nparr = np.frombuffer(photo_bytes, np.uint8)
             
-            # Конвертируем в numpy array для pyzbar
-            image_np = np.array(image)
+            # Декодируем изображение
+            img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+            
+            if img is None:
+                logger.error("Не удалось декодировать изображение")
+                return None
+            
+            # Инициализируем детектор QR-кодов OpenCV
+            qr_detector = cv2.QRCodeDetector()
             
             # Распознаем QR-код
-            decoded_objects = decode(image_np)
+            data, bbox, straight_qrcode = qr_detector.detectAndDecode(img)
             
-            if decoded_objects:
-                qr_data = decoded_objects[0].data.decode('utf-8')
-                logger.info(f"QR-код распознан с помощью pyzbar: {qr_data[:50]}...")
-                return qr_data
-            
+            if data:
+                logger.info(f"QR-код распознан с помощью OpenCV: {data[:50]}...")
+                return data
+            else:
+                # Пробуем предобработать изображение для лучшего распознавания
+                gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+                
+                # Применяем различные методы улучшения изображения
+                # 1. Адаптивное пороговое преобразование
+                adaptive_thresh = cv2.adaptiveThreshold(gray, 255, 
+                                                        cv2.ADAPTIVE_THRESH_GAUSSIAN_C, 
+                                                        cv2.THRESH_BINARY, 11, 2)
+                
+                # 2. Попробуем снова распознать
+                data, bbox, straight_qrcode = qr_detector.detectAndDecode(adaptive_thresh)
+                
+                if data:
+                    logger.info(f"QR-код распознан после предобработки: {data[:50]}...")
+                    return data
+                
+                # 3. Попробуем с оригинальным изображением в градациях серого
+                data, bbox, straight_qrcode = qr_detector.detectAndDecode(gray)
+                
+                if data:
+                    logger.info(f"QR-код распознан в градациях серого: {data[:50]}...")
+                    return data
+                
+                logger.warning("OpenCV не смог распознать QR-код на фото")
+                return None
+                
         except ImportError as e:
-            logger.warning(f"pyzbar не установлен: {e}")
+            logger.warning(f"OpenCV не установлен: {e}")
         
-        # Если pyzbar не сработал, пробуем другие методы или возвращаем None
-        logger.warning("Не удалось распознать QR-код с фото. Установите библиотеки: pip install pyzbar pillow")
+        # Если OpenCV не сработал, возвращаем None
+        logger.warning("Не удалось распознать QR-код с фото. Установите библиотеку: pip install opencv-python")
         return None
         
     except Exception as e:
@@ -647,8 +677,6 @@ class Database:
         self.add_column_if_not_exists("orders", "processed_at", "TIMESTAMP")
         
         logger.info("✅ Структура базы данных проверена")
-    
-    # ... остальные методы класса Database ...
     
     # ========== МЕТОДЫ ДЛЯ БИЛЕТОВ ==========
     def create_ticket(self, order_id: str, order_code: str, ticket_type: str, 
@@ -1649,20 +1677,6 @@ event_settings = EventSettings(db)
 ) = range(20)
 
 # ========== ПОМОЩНИКИ ==========
-def validate_name(name: str) -> bool:
-    """Проверяет валидность имени"""
-    if len(name) < 2 or len(name) > 100:
-        return False
-    
-    # Разрешаем буквы, пробелы, дефисы и апострофы
-    pattern = r'^[a-zA-Zа-яА-ЯёЁ\s\-\'\.]+$'
-    return bool(re.match(pattern, name))
-
-def is_valid_email(email: str) -> bool:
-    """Проверяет валидность email"""
-    pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
-    return bool(re.match(pattern, email))
-
 def safe_markdown_text(text: str) -> str:
     """Безопасное форматирование текста для Markdown (для обработки QR-кодов)"""
     if not text:
@@ -1704,31 +1718,6 @@ def get_user_role(user_id: int) -> str:
         return "promoter"
     else:
         return "user"
-
-def get_user_role(user_id: int) -> str:
-    """Определить роль пользователя"""
-    if user_id in ADMIN_IDS:
-        return "admin"
-    elif user_id in PROMOTER_IDS:
-        return "promoter"
-    else:
-        return "user"
-
-def escape_markdown(text: str) -> str:
-    """Экранирует специальные символы Markdown V2"""
-    if not text:
-        return ""
-    
-    escape_chars = r'_*[]()~`>#+-=|{}.!'
-    
-    result = ''
-    for char in text:
-        if char in escape_chars:
-            result += '\\' + char
-        else:
-            result += char
-    
-    return result
 
 def is_valid_email(email: str) -> bool:
     """Проверяет валидность email"""
@@ -2087,7 +2076,7 @@ async def handle_qr_photo(update: Update, context: ContextTypes.DEFAULT_TYPE):
             parse_mode=ParseMode.MARKDOWN
         )
         
-        # Распознаем QR-код с фото
+        # Распознаем QR-код с фото с помощью OpenCV
         qr_data = await decode_qr_from_photo(photo_file)
         
         if not qr_data:
@@ -2194,7 +2183,6 @@ async def handle_qr_photo(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
         return SCAN_QR_MODE
 
-
 async def handle_qr_text(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Обработчик текстовых QR-кодов"""
     try:
@@ -2264,7 +2252,7 @@ async def handle_qr_text(update: Update, context: ContextTypes.DEFAULT_TYPE):
             all_guests = ticket_info["all_guests"]
             all_guests_text = "\n\n👥 *Все гости в заказе:*\n"
             for i, guest in enumerate(all_guests, 1):
-                safe_guest =safe_markdown_text(guest)
+                safe_guest = safe_markdown_text(guest)
                 guest_marker = "✅" if guest == ticket_info['guest_name'] else "○"
                 all_guests_text += f"{i}. {guest_marker} {safe_guest}\n"
         
@@ -2991,6 +2979,7 @@ async def dashboard_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
             )
         
         return MAIN_MENU
+
 # ========== НОВЫЕ ФУНКЦИИ ДЛЯ СИСТЕМЫ НАПОМИНАНИЙ ==========
 async def send_reminders(context: ContextTypes.DEFAULT_TYPE):
     """Отправка напоминаний о необработанных заказах"""
@@ -5841,8 +5830,8 @@ def main() -> None:
     logger.info("✅ Бот запущен и готов к работе!")
     
     # Информируем о необходимости установки библиотек для распознавания QR
-    logger.info("🔧 Для распознавания QR-кодов с фото установите: pip install pyzbar pillow opencv-python")
-    logger.info("🔧 Или отправляйте текст из QR-кодов, если библиотеки не установлены")
+    logger.info("🔧 Для распознавания QR-кодов с фото установите: pip install opencv-python")
+    logger.info("🔧 Или отправляйте текст из QR-кодов, если библиотека не установлена")
     
     # Запуск отправки уведомлений о перезапуске в фоновом режиме
     import threading
