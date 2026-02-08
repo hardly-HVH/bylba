@@ -451,3 +451,60 @@ telegram.error.Conflict: Conflict: terminated by other getUpdates request; make 
 2026-02-08 21:45:34 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8433063885:AAFPT2fYk6HQB1gt-x2kxqaIaSJE9U3tQdM/editMessageText "HTTP/1.1 200 OK"
 2026-02-08 21:45:34 - root - INFO - Информация о билете получена: TKT868483, гостей: 0
 2026-02-08 21:45:35 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8433063885:AAFPT2fYk6HQB1gt-x2kxqaIaSJE9U3tQdM/editMessageText "HTTP/1.1 200 OK"
+2026-02-08 22:40:46 - root - INFO - ✅ Таблицы SQLite базы данных инициализированы
+2026-02-08 22:40:46 - root - INFO - 🔧 Проверка структуры базы данных...
+2026-02-08 22:40:46 - root - INFO - ✅ Структура базы данных проверена
+2026-02-08 22:40:46 - root - INFO - 🔧 Проверка структуры базы данных...
+2026-02-08 22:40:46 - root - INFO - ✅ Структура базы данных проверена
+2026-02-08 22:40:46 - root - INFO - 🚀 Запуск SMILE PARTY Bot...
+2026-02-08 22:40:46 - root - INFO - ✅ Статус уведомлений сброшен для всех пользователей
+2026-02-08 22:40:46 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-02-08 22:40:46 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-02-08 22:40:46 - root - INFO - ✅ Запущены периодические задачи
+2026-02-08 22:40:46 - root - INFO - ✅ Бот запущен и готов к работе!
+2026-02-08 22:40:46 - root - INFO - 🔧 Для распознавания QR-кодов с фото установите: pip install opencv-python
+2026-02-08 22:40:46 - root - INFO - 🔧 Или отправляйте текст из QR-кодов, если библиотека не установлена
+2026-02-08 22:40:46 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8433063885:AAFPT2fYk6HQB1gt-x2kxqaIaSJE9U3tQdM/getMe "HTTP/1.1 200 OK"
+2026-02-08 22:40:46 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8433063885:AAFPT2fYk6HQB1gt-x2kxqaIaSJE9U3tQdM/deleteWebhook "HTTP/1.1 200 OK"
+2026-02-08 22:40:46 - apscheduler.scheduler - INFO - Added job "periodic_notification_check" to job store "default"
+2026-02-08 22:40:46 - apscheduler.scheduler - INFO - Added job "send_reminders" to job store "default"
+2026-02-08 22:40:46 - apscheduler.scheduler - INFO - Scheduler started
+2026-02-08 22:40:46 - telegram.ext.Application - INFO - Application started
+2026-02-08 22:40:51 - root - INFO - 🔄 Начинаю отправку уведомлений о перезапуске...
+2026-02-08 22:40:51 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8433063885:AAFPT2fYk6HQB1gt-x2kxqaIaSJE9U3tQdM/getUpdates "HTTP/1.1 200 OK"
+2026-02-08 22:40:51 - root - INFO - ✅ Пользователь 7978634199 добавлен/обновен
+2026-02-08 22:40:51 - user_actions - INFO - User 7978634199 - start_command - 
+2026-02-08 22:40:51 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8433063885:AAFPT2fYk6HQB1gt-x2kxqaIaSJE9U3tQdM/sendMessage "HTTP/1.1 200 OK"
+2026-02-08 22:40:52 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8433063885:AAFPT2fYk6HQB1gt-x2kxqaIaSJE9U3tQdM/sendMessage "HTTP/1.1 200 OK"
+2026-02-08 22:40:52 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8433063885:AAFPT2fYk6HQB1gt-x2kxqaIaSJE9U3tQdM/getUpdates "HTTP/1.1 200 OK"
+2026-02-08 22:40:52 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8433063885:AAFPT2fYk6HQB1gt-x2kxqaIaSJE9U3tQdM/sendMessage "HTTP/1.1 200 OK"
+2026-02-08 22:40:52 - root - INFO - ✅ Отправлено 2 уведомлений при перезапуске бота
+2026-02-08 22:40:53 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8433063885:AAFPT2fYk6HQB1gt-x2kxqaIaSJE9U3tQdM/getUpdates "HTTP/1.1 200 OK"
+2026-02-08 22:40:54 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8433063885:AAFPT2fYk6HQB1gt-x2kxqaIaSJE9U3tQdM/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-02-08 22:40:54 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8433063885:AAFPT2fYk6HQB1gt-x2kxqaIaSJE9U3tQdM/editMessageText "HTTP/1.1 200 OK"
+2026-02-08 22:40:54 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8433063885:AAFPT2fYk6HQB1gt-x2kxqaIaSJE9U3tQdM/getUpdates "HTTP/1.1 200 OK"
+2026-02-08 22:40:55 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8433063885:AAFPT2fYk6HQB1gt-x2kxqaIaSJE9U3tQdM/getUpdates "HTTP/1.1 200 OK"
+2026-02-08 22:40:55 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8433063885:AAFPT2fYk6HQB1gt-x2kxqaIaSJE9U3tQdM/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-02-08 22:40:56 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8433063885:AAFPT2fYk6HQB1gt-x2kxqaIaSJE9U3tQdM/editMessageText "HTTP/1.1 200 OK"
+2026-02-08 22:40:56 - apscheduler.executors.default - INFO - Running job "periodic_notification_check (trigger: interval[0:00:30], next run at: 2026-02-08 19:41:26 UTC)" (scheduled at 2026-02-08 19:40:56.547534+00:00)
+2026-02-08 22:40:56 - apscheduler.executors.default - INFO - Job "periodic_notification_check (trigger: interval[0:00:30], next run at: 2026-02-08 19:41:26 UTC)" executed successfully
+2026-02-08 22:40:59 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8433063885:AAFPT2fYk6HQB1gt-x2kxqaIaSJE9U3tQdM/getUpdates "HTTP/1.1 200 OK"
+2026-02-08 22:40:59 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8433063885:AAFPT2fYk6HQB1gt-x2kxqaIaSJE9U3tQdM/getFile "HTTP/1.1 200 OK"
+2026-02-08 22:40:59 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8433063885:AAFPT2fYk6HQB1gt-x2kxqaIaSJE9U3tQdM/sendMessage "HTTP/1.1 200 OK"
+2026-02-08 22:41:00 - httpx - INFO - HTTP Request: GET https://api.telegram.org/file/bot8433063885%3AAAFPT2fYk6HQB1gt-x2kxqaIaSJE9U3tQdM/photos/file_10.jpg "HTTP/1.1 200 OK"
+2026-02-08 22:41:00 - root - INFO - QR-код распознан с помощью OpenCV: {"event": "SMILE PARTY", "ticket_id": "TKT868483",...
+2026-02-08 22:41:00 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8433063885:AAFPT2fYk6HQB1gt-x2kxqaIaSJE9U3tQdM/editMessageText "HTTP/1.1 200 OK"
+2026-02-08 22:41:00 - root - INFO - Информация о билете получена: TKT868483, гостей: 0
+2026-02-08 22:41:00 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8433063885:AAFPT2fYk6HQB1gt-x2kxqaIaSJE9U3tQdM/editMessageText "HTTP/1.1 200 OK"
+2026-02-08 22:41:02 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8433063885:AAFPT2fYk6HQB1gt-x2kxqaIaSJE9U3tQdM/getUpdates "HTTP/1.1 200 OK"
+2026-02-08 22:41:02 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8433063885:AAFPT2fYk6HQB1gt-x2kxqaIaSJE9U3tQdM/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-02-08 22:41:02 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8433063885:AAFPT2fYk6HQB1gt-x2kxqaIaSJE9U3tQdM/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-02-08 22:41:02 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8433063885:AAFPT2fYk6HQB1gt-x2kxqaIaSJE9U3tQdM/editMessageText "HTTP/1.1 200 OK"
+2026-02-08 22:41:05 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8433063885:AAFPT2fYk6HQB1gt-x2kxqaIaSJE9U3tQdM/getUpdates "HTTP/1.1 200 OK"
+2026-02-08 22:41:05 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8433063885:AAFPT2fYk6HQB1gt-x2kxqaIaSJE9U3tQdM/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-02-08 22:41:05 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8433063885:AAFPT2fYk6HQB1gt-x2kxqaIaSJE9U3tQdM/answerCallbackQuery "HTTP/1.1 200 OK"
+2026-02-08 22:41:05 - root - INFO - ✅ Билет TKT868483 отсканирован пользователем kanagakrest
+2026-02-08 22:41:05 - user_actions - INFO - User kanagakrest - scan_ticket - ticket_id=TKT868483
+2026-02-08 22:41:06 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8433063885:AAFPT2fYk6HQB1gt-x2kxqaIaSJE9U3tQdM/editMessageText "HTTP/1.1 200 OK"
+2026-02-08 22:41:06 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8433063885:AAFPT2fYk6HQB1gt-x2kxqaIaSJE9U3tQdM/sendMessage "HTTP/1.1 200 OK"
+2026-02-08 22:41:06 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8433063885:AAFPT2fYk6HQB1gt-x2kxqaIaSJE9U3tQdM/sendMessage "HTTP/1.1 200 OK"
